@@ -54,30 +54,45 @@ window.location.href="login.html";
 document.getElementById("user-name").textContent = user.displayName;
 document.getElementById("user-email").textContent = user.email;
 
-document.getElementById("upload-btn").addEventListener("click",()=>{
+const uploadBtn = document.getElementById("uploadBtn");
+const fileInput = document.getElementById("profileImage");
+const preview = document.getElementById("profilePreview");
 
-let fileInput = document.getElementById("upload-photo");
+uploadBtn.addEventListener("click", async () => {
 
-if(fileInput.files.length === 0){
+const file = fileInput.files[0];
 
+if(!file){
 alert("Please select a photo first");
-
 return;
-
 }
 
-let file = fileInput.files[0];
+const formData = new FormData();
+formData.append("file", file);
+formData.append("upload_preset", "profile-upload");
 
-let reader = new FileReader();
+try {
 
-reader.onload = function(e){
+const response = await fetch(
+"https://api.cloudinary.com/v1_1/dxjjz9qid/image/upload",
+{
+method: "POST",
+body: formData
+}
+);
 
-document.getElementById("profile-pic").src = e.target.result;
+const data = await response.json();
 
-localStorage.setItem("profilePic", e.target.result);
+console.log(data);
+
+preview.src = data.secure_url;
+
+alert("Profile photo uploaded successfully!");
+
+} catch (error) {
+
+console.error("Upload failed:", error);
 
 }
-
-reader.readAsDataURL(file);
 
 });
