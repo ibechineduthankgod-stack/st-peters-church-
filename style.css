@@ -1,3 +1,12 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html, body{
+overflow-x:hidden;
+}
 body{
 margin:0;
 font-family:'Poppins',sans-serif;
@@ -524,4 +533,26 @@ color:white;
 border:none;
 border-radius:6px;
 cursor:pointer;
+}img{
+max-width:100%;
+height:auto;
+}
+@media (max-width:768px){
+
+nav{
+flex-direction:column;
+}
+
+.hero h1{
+font-size:28px;
+}
+
+.services{
+flex-direction:column;
+}
+
+.cards{
+flex-direction:column;
+}
+
 }
